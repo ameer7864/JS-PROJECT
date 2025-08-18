@@ -50,8 +50,8 @@ signbtn.addEventListener("click", async () => {
             "Content-Type": "application/json"
         },
         "body": JSON.stringify({
-            "user": signuser,
-            "pwd": signpwd
+            "user": signuser.trim().toLowerCase(),
+            "pwd": signpwd.trim().toLowerCase()
         })
     }
     let res = await fetch(userUrl, options);
