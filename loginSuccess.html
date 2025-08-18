@@ -63,22 +63,25 @@
         //Header >>> buttons-cart , logout
         async function displayHeader() {
             let users = await getUserData();
-            let user = users.filter(user => user.id == userId);
-            user.forEach(obj => {
-                loginHeader.innerHTML = `
+            for (let obj in users) {
+                if (users[obj].id == userId) {
+                    var user = users[obj];
+                    console.log(user);
+                }
+            }
+            loginHeader.innerHTML = `
                     <div class="logo">
                         <img src="./media/logo.png" height="40" alt="">
                     </div>
                 `;
-                let item = document.createElement("div");
-                item.className = "item d-flex gap-3 justify-content-between align-items-center";
-                item.innerHTML = `
-                <p class="fw-bold">User: <span class="bg-info p-2 rounded fw-bold text-white">${obj.user.toUpperCase()}</span><p>
+            let item = document.createElement("div");
+            item.className = "item d-flex gap-3 justify-content-between align-items-center";
+            item.innerHTML = `
+                <p class="fw-bold">User: <span class="bg-info p-2 rounded fw-bold text-white">${user.user.toUpperCase()}</span><p>
                 <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#displayCartModal" onclick=displayCart()>CART</button>
                 <button class="btn btn-success" onclick=logoutUser()>LOGOUT</button>
                 `;
-                loginHeader.appendChild(item);
-            })
+            loginHeader.appendChild(item);
         }
         displayHeader();
 
@@ -100,7 +103,7 @@
                     <img src="${images[0]}">
                     <p class="fw-bold"><strong>Title :</strong> ${title}</p>
                     <p class="text-primary"><strong>Price :</strong> ${price}$</p>
-                    <p><strong>Brand : </strong> ${(brand)?brand : "Not Available"} </p>
+                    <p><strong>Brand : </strong> ${(brand) ? brand : "Not Available"} </p>
                     <p><strong>Category : </strong> ${category} </p>
                     <button class="btn btn-success" onclick=addToCart('${id}')>Add to Cart</button>
                 `;
@@ -109,42 +112,42 @@
         }
         function logoutUser() {
             let confirm = window.confirm("Do you really want to logout ?");
-            if(confirm){
+            if (confirm) {
                 showToast("Logout Successful", "success");
                 setTimeout(() => {
                     location.href = './index.html';
                 }, 500);
             }
         }
-        
-        function addToCart(id){
+
+        function addToCart(id) {
             let cartArr = (JSON.parse(localStorage.getItem(userId))) ? JSON.parse(localStorage.getItem(userId)) : [];
 
-            showToast("Added to Cart","success");
-            
+            showToast("Added to Cart", "success");
+
             let products = JSON.parse(localStorage.getItem("products"))
             let filteredArray = products.filter(obj => obj.id == id);
             cartArr.push(filteredArray[0]);
-            localStorage.setItem(userId ,JSON.stringify(cartArr));
+            localStorage.setItem(userId, JSON.stringify(cartArr));
             window.scroll({
-                top : 0,
-                behavior : "smooth"
+                top: 0,
+                behavior: "smooth"
             })
         }
-        
-        function displayCart(){
+
+        function displayCart() {
             let cartContainer = document.getElementById("cart-container");
             cartContainer.innerHTML = '';
             let cartItems = JSON.parse(localStorage.getItem(userId));
             cartItems.forEach(obj => {
-                var {id , images , title , price , brand , category} = obj;
+                var { id, images, title, price, brand, category } = obj;
                 let item = document.createElement("div");
                 item.className = "cart-item border border-2 border-danger rounded-3 m-3 p-3"
                 item.innerHTML = `
                     <img src="${images[0]}" height="230">
                     <p class="fw-bold"><strong>Title :</strong> ${title}</p>
                     <p class="text-primary"><strong>Price :</strong> ${price}$</p>
-                    <p><strong>Brand : </strong> ${(brand)?brand : "Not Available"} </p>
+                    <p><strong>Brand : </strong> ${(brand) ? brand : "Not Available"} </p>
                     <p><strong>Category : </strong> ${category} </p>
                 `;
                 cartContainer.appendChild(item);

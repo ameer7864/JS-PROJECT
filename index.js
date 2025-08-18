@@ -30,7 +30,6 @@ signbtn.addEventListener("click", async () => {
     let signuser = document.getElementById("signuser").value;
     let signpwd = document.getElementById("signpwd").value;
     let users = await getUsers();
-    let dataAdded = false;
     let user = users.filter(obj => obj.user == signuser.trim().toLowerCase());
     if (signuser == '' || signpwd == '') {
         showToast("Enter valid Data", "warning");
@@ -69,15 +68,26 @@ loginbtn.addEventListener("click", async (event) => {
         let status = false;
         let res = await fetch(userUrl);
         let users = await res.json();
-        users.forEach(obj => {
-            if ((obj.user == loguser) && (obj.pwd == logpwd)) {
+        // users.forEach(obj => {
+        //     if ((obj.user == loguser) && (obj.pwd == logpwd)) {
+        //         status = true;
+        //         showToast("Login Successful", "success");
+        //         setTimeout(()=>{
+        //             location.href = `loginSuccess.html?id=${obj.id}`;
+        //         },500)
+        //     }
+        // })
+        for(var obj in users){
+            if ((users[obj].user == loguser) && (users[obj].pwd == logpwd)) {
                 status = true;
                 showToast("Login Successful", "success");
+                var id = users[obj].id;
+                console.log(id);
                 setTimeout(()=>{
-                    location.href = `loginSuccess.html?id=${obj.id}`;
+                    location.href = `loginSuccess.html?id=${id}`;
                 },500)
             }
-        })
+        }
         if (status == false) {
             showToast("Invalid credentials", "danger");
         }
