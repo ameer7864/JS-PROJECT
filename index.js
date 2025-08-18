@@ -3,6 +3,7 @@ let apiUrl = "https://dummyjson.com/products";
 
 let signbtn = document.getElementById("signbtn");
 let loginbtn = document.getElementById("loginbtn");
+let forgotpwdbtn = document.getElementById("forgotpwdbtn");
 
 function showToast(message, type = "success") {
     const container = document.querySelector('.toast-container');
@@ -55,17 +56,16 @@ signbtn.addEventListener("click", async () => {
         })
     }
     let res = await fetch(userUrl, options);
+    document.getElementById("signuser").value = '';
+    document.getElementById("signpwd").value = '';
     if (res.ok) {
         showToast("Account created successfully");
-        signuser = '';
-        signpwd = '';
     }
-
 })
 
 loginbtn.addEventListener("click", async (event) => {
-    var loguser = document.getElementById("loguser").value;
-    var logpwd = document.getElementById("logpwd").value;
+    let loguser = document.getElementById("loguser").value;
+    let logpwd = document.getElementById("logpwd").value;
     if (loguser == '' || logpwd == '') {
         event.preventDefault();
         showToast("Enter valid Username or password", "danger");
@@ -74,23 +74,16 @@ loginbtn.addEventListener("click", async (event) => {
         let status = false;
         let res = await fetch(userUrl);
         let users = await res.json();
-        // users.forEach(obj => {
-        //     if ((obj.user == loguser) && (obj.pwd == logpwd)) {
-        //         status = true;
-        //         showToast("Login Successful", "success");
-        //         setTimeout(()=>{
-        //             location.href = `loginSuccess.html?id=${obj.id}`;
-        //         },500)
-        //     }
-        // })
         for(var obj in users){
             if ((users[obj].user.toLowerCase() == loguser.toLowerCase()) && (users[obj].pwd == logpwd)) {
                 status = true;
+                document.getElementById("loguser").value = '';
+                document.getElementById("logpwd").value = '';
                 showToast("Login Successful", "success");
+
                 var id = obj;
                 setTimeout(()=>{
                     location.href = `loginSuccess.html?id=${id}`;
-
                 },500)
             }
         }
@@ -99,3 +92,66 @@ loginbtn.addEventListener("click", async (event) => {
         }
     }
 })
+
+forgotpwdbtn.addEventListener("click" ,async () => {
+    let forgotuser = document.getElementById("forgotuser").value;
+    let forgotpwd = document.getElementById("forgotpwd").value;
+    let users = await getUsers();
+    let status = false;
+    if(forgotuser == '' && forgotpwd == ''){
+        showToast("Enter Data Properly", "warning");
+        return;
+    }
+    if(forgotuser == ''){
+        showToast("Username should not be empty" , "danger");
+        return;
+    }
+    for(let obj in users){
+        if(users[obj].user == forgotuser){
+            var id = obj;
+            status = true;
+        }
+    }
+    if(!status && forgotuser != '' && forgotpwd != ''){
+        showToast("User doesn't exists","warning");
+        return;
+    }
+    let mainUrl = `https://database-9164f-default-rtdb.firebaseio.com/users/${id}.json`
+    var options = {
+        "method" : "PATCH",
+        "headers" : {
+            "Content-Type" : "application/json"
+        },
+        "body" : JSON.stringify({
+            "pwd" : forgotpwd
+        })
+    }
+    if(forgotpwd == ''){
+        showToast("Password should not be empty" , "danger");
+        return;
+    }
+    else{
+        let res = await fetch(mainUrl , options);
+        document.getElementById("forgotuser").value = '';
+        document.getElementById("forgotpwd").value = '';
+        if(res.ok){
+            showToast("Password changed successfully" , "success");
+        }
+    }
+})
+
+function clearLogData(){
+    document.getElementById("loguser").value = '';
+    document.getElementById("logpwd").value = '';
+}
+
+
+function clearSignData(){
+    document.getElementById("signuser").value = '';
+    document.getElementById("signpwd").value = '';
+}
+
+function clearForgotData(){
+    document.getElementById("forgotuser").value = '';
+    document.getElementById("forgotpwd").value = '';
+}

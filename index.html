@@ -52,8 +52,8 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary fw-bold" id="loginbtn">LOGIN</button>
-                    <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#signInModal">SIGN IN</button>
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">forgot password</a>
+                    <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#signInModal" onclick="clearLogData()">SIGN IN</button>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" onclick="clearLogData()">forgot password</a>
                 </div>
             </div>
         </div>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-success fw-bold" id="signbtn" type="button">Sign In</button>
-                    <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#loginModal">Back to Login</button>
+                    <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#loginModal" onclick="clearSignData()">Back to Login</button>
                 </div>
             </div>
         </div>
@@ -96,7 +96,8 @@
                     <dd><input type="password" id="forgotpwd" placeholder="Enter password" class="form-control"></dd>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success">Change Password</button>
+                    <button class="btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#loginModal" onclick="clearForgotData()">Back to Login</button>
+                    <button class="btn btn-success fw-bold" id="forgotpwdbtn">Change Password</button>
                 </div>
             </div>
         </div>
