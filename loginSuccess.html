@@ -65,11 +65,12 @@
         async function displayHeader() {
             let users = await getUserData();
             for (let obj in users) {
-                if (users[obj].id == userId) {
+                if (obj == userId) {
                     var user = users[obj];
                     console.log(user);
                 }
             }
+            console.log(user);
             loginHeader.innerHTML = `
                     <div class="logo">
                         <img src="./media/logo.png" height="40" alt="">

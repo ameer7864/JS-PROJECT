@@ -84,13 +84,13 @@ loginbtn.addEventListener("click", async (event) => {
         //     }
         // })
         for(var obj in users){
-            if ((users[obj].user == loguser) && (users[obj].pwd == logpwd)) {
+            if ((users[obj].user.toLowerCase() == loguser.toLowerCase()) && (users[obj].pwd == logpwd)) {
                 status = true;
                 showToast("Login Successful", "success");
-                var id = users[obj].id;
-                console.log(id);
+                var id = obj;
                 setTimeout(()=>{
                     location.href = `loginSuccess.html?id=${id}`;
+
                 },500)
             }
         }
