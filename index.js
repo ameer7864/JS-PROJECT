@@ -57,6 +57,8 @@ signbtn.addEventListener("click", async () => {
     let res = await fetch(userUrl, options);
     if (res.ok) {
         showToast("Account created successfully");
+        signuser = '';
+        signpwd = '';
     }
 
 })
