@@ -30,16 +30,20 @@ signbtn.addEventListener("click", async () => {
     let signuser = document.getElementById("signuser").value;
     let signpwd = document.getElementById("signpwd").value;
     let users = await getUsers();
-    let user = users.filter(obj => obj.user == signuser.trim().toLowerCase());
+    // let user = users.filter(obj => obj.user == signuser.trim().toLowerCase());
+    for(var obj in users){
+        if(users[obj].user == signuser.trim().toLowerCase()){
+            var user = users[obj];
+        }
+    }
     if (signuser == '' || signpwd == '') {
         showToast("Enter valid Data", "warning");
         return;
     }
-    else if (user.length == 1) {
+    else if (user) {
         showToast("User already exists", "danger");
         return;
     }
-
     var options = {
         "method": "POST",
         "headers": {
