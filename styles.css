@@ -76,6 +76,10 @@
     border-radius: 7px;
 }
 
+.login-header {
+    padding: 15px;
+}
+
 .item-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -119,9 +123,11 @@
     .header>.header-items * {
         display: none;
     }
-
+    .login-header{
+        padding-left: 10px;
+        padding-top: 10px;
+    }
     .login-header>.item {
-        width: 100%;
         flex-direction: column;
         gap: 3px !important;
     }
