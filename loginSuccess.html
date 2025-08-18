@@ -122,19 +122,27 @@
 
         function addToCart(id) {
             let cartArr = (JSON.parse(localStorage.getItem(userId))) ? JSON.parse(localStorage.getItem(userId)) : [];
-
-            showToast("Added to Cart", "success");
-
             let products = JSON.parse(localStorage.getItem("products"))
             let filteredArray = products.filter(obj => obj.id == id);
             cartArr.push(filteredArray[0]);
-            localStorage.setItem(userId, JSON.stringify(cartArr));
-            window.scroll({
-                top: 0,
-                behavior: "smooth"
-            })
+            let duplicates = cartArr.filter(obj => obj.id == id)
+            if(duplicates.length == 1){
+                showToast("Added to Cart", "success");
+                localStorage.setItem(userId, JSON.stringify(cartArr));
+                window.scroll({
+                    top: 0,
+                    behavior: "smooth"
+                })
+            }
+            else{
+                showToast("Product is already in cart" , "warning");
+                window.scroll({
+                    top: 0,
+                    behavior: "smooth"
+                })
+            }
         }
-
+        //cart-container
         function displayCart() {
             let cartContainer = document.getElementById("cart-container");
             cartContainer.innerHTML = '';
@@ -142,16 +150,26 @@
             cartItems.forEach(obj => {
                 var { id, images, title, price, brand, category } = obj;
                 let item = document.createElement("div");
-                item.className = "cart-item border border-2 border-danger rounded-3 m-3 p-3"
+                item.className = "cart-item border border-2 border-info rounded-3 m-3 p-3"
                 item.innerHTML = `
-                    <img src="${images[0]}" height="230">
+                    <img src="${images[0]}" height="180">
                     <p class="fw-bold"><strong>Title :</strong> ${title}</p>
                     <p class="text-primary"><strong>Price :</strong> ${price}$</p>
                     <p><strong>Brand : </strong> ${(brand) ? brand : "Not Available"} </p>
                     <p><strong>Category : </strong> ${category} </p>
+                    <button class="btn btn-danger" onclick=removeFromCart(${id})>Remove</button>
                 `;
                 cartContainer.appendChild(item);
             });
+        }
+
+        function removeFromCart(id){
+            let cartItems = JSON.parse(localStorage.getItem(userId));
+            // console.log(cartItems);
+            let filteredCart = cartItems.filter(obj => obj.id != id);
+            showToast("Removed from cart successfully");
+            localStorage.setItem(userId , JSON.stringify(filteredCart));
+            displayCart();
         }
     </script>
 
