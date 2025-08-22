@@ -75,7 +75,7 @@ loginbtn.addEventListener("click", async (event) => {
         let res = await fetch(userUrl);
         let users = await res.json();
         for(var obj in users){
-            if ((users[obj].user.toLowerCase() == loguser.toLowerCase()) && (users[obj].pwd == logpwd)) {
+            if ((users[obj].user.toLowerCase() == loguser.toLowerCase()) && (users[obj].pwd.toLowerCase() == logpwd.toLowerCase())) {
                 status = true;
                 document.getElementById("loguser").value = '';
                 document.getElementById("logpwd").value = '';
