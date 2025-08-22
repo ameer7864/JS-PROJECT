@@ -107,7 +107,7 @@ forgotpwdbtn.addEventListener("click" ,async () => {
         return;
     }
     for(let obj in users){
-        if(users[obj].user == forgotuser){
+        if(users[obj].user.toLowerCase() == forgotuser.trim().toLowerCase()){
             var id = obj;
             status = true;
         }
