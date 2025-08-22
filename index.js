@@ -123,7 +123,7 @@ forgotpwdbtn.addEventListener("click" ,async () => {
             "Content-Type" : "application/json"
         },
         "body" : JSON.stringify({
-            "pwd" : forgotpwd
+            "pwd" : forgotpwd.trim().toLowerCase()
         })
     }
     if(forgotpwd == ''){
