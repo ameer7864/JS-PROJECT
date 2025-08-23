@@ -11,6 +11,30 @@
     font-family: 'Roboto';
 }
 
+body {
+    position: relative;
+    min-height: 100vh;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid lightblue;
+    border-right-color: orange;
+    animation: l2 1s infinite linear;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+}
+
+@keyframes l2 {
+    to {
+        transform: rotate(1turn)
+    }
+}
+
 .bg-image {
     background-image: url("https://wallpaperbat.com/img/799498-shopping-wallpaper.jpg");
     background-image: url(./media/bg-image.jpg);
@@ -111,18 +135,18 @@
     transform: scale(0.85);
 }
 
-.login-item{
+.login-item {
     opacity: 0;
     transition: 0.4s;
     transform: translateY(30px) scale(0.8);
 }
 
-.reveal{
+.reveal {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-#cart-container>div{
+#cart-container>div {
     align-content: center;
     text-align: center;
 }
@@ -135,10 +159,12 @@
     .header>.header-items * {
         display: none;
     }
-    .login-header{
+
+    .login-header {
         padding-left: 10px;
         padding-top: 10px;
     }
+
     .login-header>.item {
         flex-direction: column;
         gap: 3px !important;

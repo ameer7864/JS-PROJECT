@@ -4,7 +4,9 @@ let apiUrl = "https://dummyjson.com/products";
 let signbtn = document.getElementById("signbtn");
 let loginbtn = document.getElementById("loginbtn");
 let forgotpwdbtn = document.getElementById("forgotpwdbtn");
+let loader = document.getElementById("loader");
 
+loader.remove();
 function showToast(message, type = "success") {
     const container = document.querySelector('.toast-container');
     const toast = document.createElement('div');
