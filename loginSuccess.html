@@ -10,6 +10,31 @@
         integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="./media/logo.png" type="image/x-icon">
+    <style>
+        body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .loader {
+            width: 50px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 8px solid lightblue;
+            border-right-color: orange;
+            animation: l2 1s infinite linear;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 999;
+        }
+
+        @keyframes l2 {
+            to {
+                transform: rotate(1turn)
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -118,23 +143,23 @@
             }, 0);
         }
 
-        function intersectionObserver(){
+        function intersectionObserver() {
             const items = document.querySelectorAll(".login-item");
             console.log(items);
             const handleIntersect = (entries) => {
-                for(entry of entries){
-                    if(entry.isIntersecting){
+                for (entry of entries) {
+                    if (entry.isIntersecting) {
                         entry.target.classList.add("reveal");
                     }
-                    else{
+                    else {
                         entry.target.classList.remove("reveal");
                     }
                 }
             }
-            const observer = new IntersectionObserver(handleIntersect , {
-                threshold : 0.1
+            const observer = new IntersectionObserver(handleIntersect, {
+                threshold: 0.1
             });
-            for(item of items){
+            for (item of items) {
                 observer.observe(item);
             }
         }
@@ -155,7 +180,7 @@
             let filteredArray = products.filter(obj => obj.id == id);
             cartArr.push(filteredArray[0]);
             let duplicates = cartArr.filter(obj => obj.id == id)
-            if(duplicates.length == 1){
+            if (duplicates.length == 1) {
                 showToast("Added to Cart", "success");
                 localStorage.setItem(userId, JSON.stringify(cartArr));
                 window.scroll({
@@ -163,8 +188,8 @@
                     behavior: "smooth"
                 })
             }
-            else{
-                showToast("Product is already in cart" , "warning");
+            else {
+                showToast("Product is already in cart", "warning");
                 window.scroll({
                     top: 0,
                     behavior: "smooth"
@@ -192,12 +217,12 @@
             });
         }
 
-        function removeFromCart(id){
+        function removeFromCart(id) {
             let cartItems = JSON.parse(localStorage.getItem(userId));
             // console.log(cartItems);
             let filteredCart = cartItems.filter(obj => obj.id != id);
             showToast("Removed from cart successfully");
-            localStorage.setItem(userId , JSON.stringify(filteredCart));
+            localStorage.setItem(userId, JSON.stringify(filteredCart));
             displayCart();
         }
     </script>
