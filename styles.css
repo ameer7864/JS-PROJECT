@@ -95,6 +95,7 @@
 }
 
 .item-container>div:hover {
+    transition: 0s;
     box-shadow: 0 0 4px;
     transform: translateY(-4px);
 }
@@ -108,6 +109,17 @@
 
 .item-container img:hover {
     transform: scale(0.85);
+}
+
+.login-item{
+    opacity: 0;
+    transition: 0.4s;
+    transform: translateY(30px) scale(0.8);
+}
+
+.reveal{
+    opacity: 1;
+    transform: translateY(0) scale(1);
 }
 
 #cart-container>div{
